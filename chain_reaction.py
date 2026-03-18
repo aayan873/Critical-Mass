@@ -27,9 +27,6 @@ class ChainReactionGame:
     """
 
     def __init__(self, rows=6, cols=9):
-        if rows <= 0 or cols <= 0:
-            raise ValueError("rows and cols must be positive")
-
         self.rows = rows
         self.cols = cols
         self.board = [[(None, 0) for _ in range(cols)] for _ in range(rows)]
@@ -39,9 +36,6 @@ class ChainReactionGame:
         return deepcopy(self.board)
 
     def get_valid_moves(self, player_id):
-        if player_id not in (0, 1):
-            raise ValueError("player_id must be 0 or 1")
-
         moves = []
         for r in range(self.rows):
             for c in range(self.cols):
@@ -51,8 +45,7 @@ class ChainReactionGame:
         return moves
 
     def apply_move(self, player_id, move):
-        if player_id not in (0, 1):
-            raise ValueError("player_id must be 0 or 1")
+
         if not (isinstance(move, tuple) and len(move) == 2):
             raise ValueError("move must be a (row, col) tuple")
 
@@ -64,7 +57,7 @@ class ChainReactionGame:
         if owner is not None and owner != player_id:
             raise ValueError("invalid move: cell is owned by opponent")
 
-        # Place orb: ownership becomes the moving player.
+        # Place orb- ownership becomes the moving player
         self.board[r][c] = (player_id, count + 1)
         self.moves_played[player_id] += 1
 
@@ -77,16 +70,16 @@ class ChainReactionGame:
             cr, cc = q.popleft()
             cur_owner, cur_count = self.board[cr][cc]
 
-            # It's possible this cell no longer needs to explode (it was changed by a previous explosion).
+            # It's possible this cell no longer needs to explode
             if cur_count < self.capacity(cr, cc) :
                 continue
 
             exploding_owner = cur_owner
             if self.check_winner() is not None:
-                # Board reaches win state; stop chain reaction immediately.
+                # Board reaches win state, can stop chain reactions
                 break
 
-            # Explosion: cell loses capacity orbs.
+            # Explosion- cell loses capacity orbs
             cap = self.capacity(cr, cc)
             remaining = cur_count - cap
             if remaining > 0:
@@ -96,7 +89,7 @@ class ChainReactionGame:
             else:
                 self.board[cr][cc] = (None, 0)
 
-            # Distribute 1 orb to each neighbor and set ownership to exploding owner.
+            # Distribute 1 orb to each neighbor and set ownership to exploding owner
             for nr, nc in self.neighbors(cr, cc):
                 n_owner, n_count = self.board[nr][nc]
                 self.board[nr][nc] = (exploding_owner, n_count + 1)
