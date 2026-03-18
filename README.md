@@ -21,7 +21,7 @@ Create the best bot that can beat other bots in Critical Mass (Chain Reaction).
 
 ## Repo Structure
 * **`chain_reaction.py`**: The core game engine. Handles the physics, explosions, orb conservation, and victory detection.
-* **`play_match.py`**: The match runner. You use this script to duel two bots against each other. It includes crash protection to prevent poor bot code from crashing the match.
+* **`bot_vs_bot.py`**: The match runner. You use this script to duel two bots against each other. It includes crash protection to prevent poor bot code from crashing the match.
 * **`dummy_bot.py`**: An incredibly simple template bot. It just finds the very first valid cell and plays there.
 * **`random_bot.py`**: A slightly smarter template bot that picks a completely random valid move inside the grid.
 
@@ -39,6 +39,27 @@ def get_move(state, player_id):
 
 Check out `dummy_bot.py` or `random_bot.py` for a practical example.
 
+## 🖥️ Using the GUI
+The repository also includes a graphical interface, `gui.py`, to help you visualize your bot's behavior, debug edge cases, or even play manually against your own bot!
+
+**To watch two bots play:**
+Simply run the script:
+```bash
+python3 gui.py
+```
+
+**To play manually:**
+If you want to play a human-vs-bot or human-vs-human game, you can easily disable one or both bots to allow manual clicks.
+1. Open up `gui.py` and locate the core bot assignment line:
+   ```python
+   self.bots = {0: bot0.get_move, 1: bot1.get_move} 
+   ```
+2. Change the assigned bot function to `None` for the player(s) you want to play manually:
+   ```python
+   # Player 0 is now manually controlled! Simply click on the GUI grid to move.
+   self.bots = {0: None, 1: bot1.get_move} 
+   ```
+3. Run `python3 gui.py` and enjoy!
+
 ## How to Submit Your Bot
 To participate in the tournament, submit your bot as a single Python file containing your `get_move` function (e.g., `yourname_bot.py`). Make sure your bot logic is entirely contained within this file. Ensure your bot executes efficiently to avoid being forfeited for exceeding tournament move time limits.
-x  xx

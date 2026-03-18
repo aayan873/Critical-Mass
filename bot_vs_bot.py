@@ -47,7 +47,23 @@ def main():
 
     print("Reached max_turns without a winner.")
     print("Final board:")
-    print_board(game.get_state())
+    state = game.get_state()
+    print_board(state)
+    
+    # Tiebreaker: Player with the most cells owned wins
+    counts = {0: 0, 1: 0}
+    for row in state:
+        for owner, orb_count in row:
+            if owner in (0, 1) and orb_count > 0:
+                counts[owner] += 1
+                
+    print(f"Cell counts - Player 0: {counts[0]}, Player 1: {counts[1]}")
+    if counts[0] > counts[1]:
+        print("Winner: Player 0 (Tie-breaker by most cells)")
+    elif counts[1] > counts[0]:
+        print("Winner: Player 1 (Tie-breaker by most cells)")
+    else:
+        print("Result: Absolute Tie!")
 
 if __name__ == "__main__":
     main()

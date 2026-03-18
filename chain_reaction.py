@@ -26,7 +26,7 @@ class ChainReactionGame:
       a player immediately wins if the opponent has 0 owned cells left.
     """
 
-    def __init__(self, rows=6, cols=9):
+    def __init__(self, rows=12, cols=8):
         self.rows = rows
         self.cols = cols
         self.board = [[(None, 0) for _ in range(cols)] for _ in range(rows)]
