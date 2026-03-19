@@ -3,6 +3,7 @@ from chain_reaction import ChainReactionGame
 # Pick which bots to run by changing these imports
 import dummy_bot as bot0
 import random_bot as bot1
+import time
 
 def print_board(state):
     for row in state:
@@ -26,7 +27,10 @@ def main():
         player = turn % 2
         
         try:
+            start_time = time.time()
             move = bots[player](game.get_state(), player)
+            if time.time() - start_time > 1.0:
+                raise Exception("Bot took too long to make a move (exceeded 1000ms)")
             print(f"Turn {turn + 1}: Player {player} plays {move}")
             
             game.apply_move(player, move)

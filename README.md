@@ -61,5 +61,12 @@ If you want to play a human-vs-bot or human-vs-human game, you can easily disabl
    ```
 3. Run `python3 gui.py` and enjoy!
 
+**To control simulation speed:**
+You can adjust the speed of bot vs bot games by modifying the millisecond delay in `gui.py`. Locate the `self.master.after` line and change `500` to your desired speed:
+```python
+# Adjust bot v bot speed - 500 = 0.5 seconds between bot moves 
+self.master.after(500, self.play_next_turn)
+```
+
 ## How to Submit Your Bot
-To participate in the tournament, submit your bot as a single Python file containing your `get_move` function (e.g., `yourname_bot.py`). Make sure your bot logic is entirely contained within this file. Ensure your bot executes efficiently to avoid being forfeited for exceeding tournament move time limits.
+To participate in the tournament, submit your bot as a single Python file containing your `get_move` function (e.g., `yourname_bot.py`). Make sure your bot logic is entirely contained within this file. Ensure your bot executes efficiently to avoid being forfeited for exceeding tournament move time limits (**1000ms / 1s** max per move).

@@ -2,6 +2,7 @@ import tkinter as tk
 from chain_reaction import ChainReactionGame
 import dummy_bot as bot0
 import random_bot as bot1
+import time
 
 CELL_SIZE = 60
 COLORS = {0: "#ff4d4d", 1: "#4d4dff"} # Red and Blue
@@ -112,7 +113,10 @@ class ChainReactionGUI:
         bot_func = self.bots[player]
         if bot_func is not None:
             try:
+                start_time = time.time()
                 move = bot_func(self.game.get_state(), player)
+                if time.time() - start_time > 1.0:
+                    raise Exception("Bot took too long to make a move (exceeded 1000ms)")
                 self.apply_move(player, move, from_bot=True)
             except Exception as e:
                 # Bot crashed or made an illegal move
